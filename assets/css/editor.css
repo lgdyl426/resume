@@ -1,0 +1,480 @@
+/* ========== Editor Mode Styles ========== */
+
+/* Edit button in navbar */
+.edit-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.edit-btn.active {
+    background: var(--accent-color);
+    color: white;
+}
+
+.edit-btn.active:hover {
+    background: var(--accent-light);
+}
+
+/* Floating toolbar */
+.editor-toolbar {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 999;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--border-color);
+    opacity: 0;
+    visibility: hidden;
+}
+
+.editor-toolbar.visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.editor-toolbar-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: var(--font-main);
+}
+
+.editor-toolbar-btn:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.editor-toolbar-btn.primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: white;
+}
+
+.editor-toolbar-btn.primary:hover {
+    background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+    transform: translateY(-2px);
+}
+
+.editor-toolbar-btn.danger {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.editor-toolbar-btn.danger:hover {
+    background: #c62828;
+    color: white;
+}
+
+.editor-toolbar-btn.success {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.editor-toolbar-btn.success:hover {
+    background: #2e7d32;
+    color: white;
+}
+
+.editor-toolbar-divider {
+    width: 1px;
+    height: 28px;
+    background: var(--border-color);
+    margin: 0 4px;
+}
+
+/* Editable elements highlight */
+[data-editable] {
+    position: relative;
+    transition: var(--transition);
+}
+
+body.edit-mode [data-editable] {
+    outline: 2px dashed transparent;
+    outline-offset: 2px;
+    border-radius: 4px;
+    cursor: text;
+}
+
+body.edit-mode [data-editable]:hover {
+    outline-color: var(--secondary-color);
+    background: rgba(107, 179, 232, 0.1);
+}
+
+body.edit-mode [data-editable]:focus {
+    outline-color: var(--primary-color);
+    background: rgba(26, 74, 122, 0.08);
+}
+
+/* Skill bar editor controls */
+body.edit-mode .skill-item {
+    position: relative;
+}
+
+.skill-edit-controls {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+body.edit-mode .skill-edit-controls {
+    display: flex;
+}
+
+.skill-edit-btn {
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.skill-edit-btn:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.skill-edit-input {
+    width: 60px;
+    height: 28px;
+    padding: 0 8px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-family: var(--font-main);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.skill-edit-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(26, 74, 122, 0.15);
+}
+
+/* Edit mode indicator banner */
+.edit-banner {
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
+    color: white;
+    text-align: center;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    z-index: 998;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 8px rgba(184, 134, 11, 0.3);
+}
+
+.edit-banner.visible {
+    transform: translateY(0);
+}
+
+.edit-banner kbd {
+    background: rgba(255, 255, 255, 0.25);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.8rem;
+    margin: 0 2px;
+}
+
+/* Unsaved changes indicator */
+.edit-btn.has-changes::after {
+    content: '';
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 8px;
+    height: 8px;
+    background: #e53935;
+    border-radius: 50%;
+    animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.7; }
+}
+
+/* Toast notification */
+.editor-toast {
+    position: fixed;
+    top: calc(var(--nav-height) + 20px);
+    right: 24px;
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1002;
+    transform: translateX(120%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--border-color);
+    max-width: 360px;
+}
+
+.editor-toast.visible {
+    transform: translateX(0);
+}
+
+.editor-toast-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.editor-toast.success .editor-toast-icon {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.editor-toast.error .editor-toast-icon {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.editor-toast.info .editor-toast-icon {
+    background: #e3f2fd;
+    color: #1565c0;
+}
+
+.editor-toast-message {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+/* Import/Export modal */
+.editor-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    backdrop-filter: blur(4px);
+}
+
+.editor-modal-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.editor-modal {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    width: 90%;
+    max-width: 560px;
+    max-height: 80vh;
+    box-shadow: var(--shadow-lg);
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.editor-modal-overlay.visible .editor-modal {
+    transform: scale(1) translateY(0);
+}
+
+.editor-modal-header {
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.editor-modal-header h3 {
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.editor-modal-close {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: var(--bg-secondary);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.editor-modal-close:hover {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.editor-modal-body {
+    padding: 24px 28px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.editor-modal-body p {
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.editor-modal-textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 12px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    resize: vertical;
+    transition: var(--transition);
+}
+
+.editor-modal-textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(26, 74, 122, 0.15);
+}
+
+.editor-modal-footer {
+    padding: 16px 28px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.editor-modal-btn {
+    padding: 10px 24px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: var(--font-main);
+}
+
+.editor-modal-btn.primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: white;
+}
+
+.editor-modal-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(26, 74, 122, 0.3);
+}
+
+.editor-modal-btn.secondary {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+}
+
+.editor-modal-btn.secondary:hover {
+    background: var(--border-color);
+}
+
+/* Content editing placeholder */
+body.edit-mode [data-editable]:empty::before {
+    content: attr(data-placeholder);
+    color: var(--text-light);
+    font-style: italic;
+}
+
+/* Image placeholder in edit mode */
+body.edit-mode .hero-avatar {
+    outline: 2px dashed var(--secondary-color);
+    outline-offset: 4px;
+}
+
+/* Responsive adjustments for editor */
+@media (max-width: 768px) {
+    .editor-toolbar {
+        bottom: 16px;
+        padding: 8px 12px;
+        gap: 4px;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 92%;
+    }
+
+    .editor-toolbar-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+
+    .editor-toolbar-btn span {
+        display: none;
+    }
+
+    .editor-toolbar-divider {
+        display: none;
+    }
+
+    .edit-banner {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+
+    .editor-toast {
+        right: 12px;
+        left: 12px;
+        max-width: none;
+    }
+}
